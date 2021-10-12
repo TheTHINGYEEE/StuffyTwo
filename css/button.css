@@ -1,0 +1,84 @@
+        .invitebtn {
+            -webkit-transition: 0.2s all ease;
+            transition: 0.2s all ease;
+            padding: 30px 60px;
+            border: 0.5px solid white;
+            font-size: 30px;
+            background-color: Transparent;
+            color: white;
+        }
+
+        .invitebtn:hover {
+            color: black;
+            border: 0.5px solid #24252a;
+            background-image: linear-gradient(45deg, #854eb1, #2aa383);
+            background-size: 100%;
+            background-repeat: repeat;
+            -webkit-background-clip: initial;
+            -moz-background-clip: initial;
+            -moz-text-fill-color: transparent;
+        }
+
+        .buttoncontainer {
+            text-align: center;
+        }
+
+        .codebtn {
+            -webkit-transition: 0.2s all ease;
+            transition: 0.2s all ease;
+            padding: 30px 60px;
+            border: 0.5px solid white;
+            font-size: 30px;
+            background-color: Transparent;
+            color: white;
+        }
+
+        .codebtn:hover {
+	    color: black;
+            border: 0.5px solid #24252a;
+            background-image: linear-gradient(45deg, #854eb1, #2aa383);
+            background-size: 100%;
+            background-repeat: repeat;
+            -webkit-background-clip: initial;
+            -moz-background-clip: initial;
+            -moz-text-fill-color: transparent;
+        }
+
+        a {
+            color: #2C93FF;
+        }
+
+        a:hover, a:focus {
+            color: #1084FF;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: -webkit-sticky;
+            /* Safari */
+            position: sticky;
+            top: 0;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: #4CAF50;
