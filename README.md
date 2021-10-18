@@ -8,7 +8,7 @@ A very lightweight Discord Music Bot for you and your friends!
 
 # Features
 - YouTube Search Support.
-- Queue saving. 
+- Queue saving and loading ofc!
 - Audio player controls.
 - More to come!
 
