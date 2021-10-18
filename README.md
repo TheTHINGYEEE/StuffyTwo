@@ -1,4 +1,6 @@
 # StuffyTwo
+<img src="https://img.shields.io/github/license/TheTHINGYEEE/StuffyTwo"> <img src="https://img.shields.io/github/stars/TheTHINGYEEE/StuffyTwo"> <img src="https://img.shields.io/github/issues/TheTHINGYEEE/StuffyTwo">
+
 A very lightweight Discord Music Bot for you and your friends!
 
 - **Website**: https://stuffytwo.thingytv.online (Invite!)
