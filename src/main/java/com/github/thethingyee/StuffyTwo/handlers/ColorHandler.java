@@ -33,10 +33,11 @@ public class ColorHandler {
      * @return Returns the most dominant color of the cached image.
      */
     public Color getDominantColor() {
+        int blackLevel = 15;
         for(int x = 0; x < img.getWidth(); x++) {
             for(int y = 0; y < img.getHeight(); y++) {
                 Color c = new Color(img.getRGB(x, y));
-                if(c.getRed() < 15 && c.getGreen() < 15 && c.getBlue() < 15) continue;
+                if(c.getRed() < blackLevel && c.getGreen() < blackLevel && c.getBlue() < blackLevel) continue;
                 int cVote = votes.containsKey(c) ? votes.get(c) + 1 : 1;
                 votes.put(c, cVote);
             }
