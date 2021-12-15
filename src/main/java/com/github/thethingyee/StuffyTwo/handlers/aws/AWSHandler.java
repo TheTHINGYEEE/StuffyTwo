@@ -75,10 +75,10 @@ public class AWSHandler {
         });
         parent.put("songsInSort", urls);
 
-        File folder = new File(".\\temp");
+        File folder = new File(".//temp");
         folder.mkdirs();
 
-        File f = new File(".\\temp\\" + generated + ".json");
+        File f = new File(".//temp//" + generated + ".json");
         f.createNewFile();
 
         FileWriter fWriter = new FileWriter(f);
