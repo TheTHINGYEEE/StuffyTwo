@@ -49,7 +49,8 @@ public class StuffyTwo extends ListenerAdapter {
                 new QueueCommand(),
                 new VolumeCommand(),
                 new SaveQueueCommand(),
-                new QueuePlayCommand());
+                new QueuePlayCommand(),
+                new BassBoostCommand());
 
         logger.info("Successfully loaded!");
     }

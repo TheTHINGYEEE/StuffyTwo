@@ -26,13 +26,25 @@ public class TrackScheduler extends AudioEventAdapter {
     private boolean repeating = false;
 
     private EqualizerFactory equalizer;
-    private int boostPercentage;
+    public int boostPercentage;
 
-    private static final float[] BASS_BOOST = {0.15f, 0.14f, 0.13f, 0.14f, 0.05f, 0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.07f, 0.08f, 0.09f, 0.1f};
+//    private static final float[] BASS_BOOST = {0.15f, 0.14f, 0.13f, 0.14f, 0.05f, 0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.07f, 0.08f, 0.09f, 0.1f};
+    private static final float[] BASS_BOOST = {0.045f, 0.04f, 0.02f, 0.01f, -0.01f, -0.02f, -0.08f, -0.09f, -0.1f, -0.11f, -0.12f,
+        0.01f, 0.02f, 0.03f, 0.04f};
 
+    // Took countless hours but here's the summary of this final thing idk 2am right now holy
+    /*
+        don't even try to go 200% it feels like your ears are blocked. not earrape tho (for me) use at
+        ur own risk
+
+        bread lukrembo and other lofi songs = 115-120% bass boost
+        very chill kind-of lofi songs = 90-100%
+        hard bass = fuckin 70-80%
+        earrape = 0% L
+     */
 
     /**
-     * @param player The audio player this scheduler uses
+     * @param player The audio player this scheduler uses.
      */
     public TrackScheduler(AudioPlayer player, Guild guild) {
         this.player = player;
@@ -110,6 +122,17 @@ public class TrackScheduler extends AudioEventAdapter {
         List<AudioTrack> tracks = new ArrayList<>(queue);
         for (AudioTrack track : tracks) {
             queue.remove(track);
+        }
+    }
+
+    public void eqlowbass(float diff) {
+        this.equalizer = new EqualizerFactory();
+        player.setFilterFactory(equalizer);
+        for (int i = 0; i < BASS_BOOST.length; i++) {
+            equalizer.setGain(i, -BASS_BOOST[i] + diff);
+        }
+        for (int i = 0; i < BASS_BOOST.length; i++) {
+            equalizer.setGain(i, BASS_BOOST[i] + (diff - 0.1f));
         }
     }
 
