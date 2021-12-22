@@ -32,10 +32,11 @@ public class SaveQueueCommand extends Command {
         if(args.length != 0) return;
         try {
             AWSHandler aws = new AWSHandler();
-            File f = aws.savePublicQueue(manager.getPlayerManager().getGuildAudioPlayer(event.getGuild()).getScheduler().getQueue());
-            String url = aws.uploadFile(f, "https://cdn.thingytv.online", true);
+            if(aws.bucketIsNull()) event.getChannel().sendMessage("This command is currently disabled. Please contact the bot owner if you believe this was a mistake.").queue();
+            File f = aws.savePublicQueue(manager.getPlayerManager().getGuildAudioPlayer(event.getGuild()).getScheduler().getQueueWithPlayingTrack());
+            String[] uploadedFile = aws.uploadFile(f);
 
-            event.getChannel().sendMessageEmbeds(Embeds.getSavedQueueEmbed(parseJSON(f), url).build()).queue();
+            event.getChannel().sendMessageEmbeds(Embeds.getSavedQueueEmbed(new JSONObject(uploadedFile[1]), uploadedFile[0]).build()).queue();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,6 +51,7 @@ public class SaveQueueCommand extends Command {
      */
     private JSONObject parseJSON(File f) throws IOException {
         // https://stackoverflow.com/a/43091074
+        // Not used yet but will use later.
         String content = new String(Files.readAllBytes(Paths.get(f.toURI())));
         return new JSONObject(content);
     }

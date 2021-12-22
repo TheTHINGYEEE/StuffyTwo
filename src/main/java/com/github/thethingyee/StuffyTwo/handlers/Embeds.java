@@ -2,6 +2,7 @@ package com.github.thethingyee.StuffyTwo.handlers;
 
 import com.github.thethingyee.StuffyTwo.player.manager.PlayerManager;
 import com.jagrosh.jlyrics.Lyrics;
+import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -27,6 +28,27 @@ public class Embeds {
         embed.setColor(member.getColor());
 
         return embed;
+    }
+
+    public static EmbedBuilder getPlaylistLoadedEmbed(AudioPlaylist playlist) {
+        EmbedBuilder builder = new EmbedBuilder();
+
+        AudioTrack firstTrack = playlist.getTracks().get(0);
+
+        String videoId = firstTrack.getInfo().uri.replace("https://www.youtube.com/watch?v=", "");
+
+        builder.setTitle("Playlist tracks added.", firstTrack.getInfo().uri);
+        builder.addField("Name:", playlist.getName(), false);
+        builder.addField("F.T. ID:", videoId, true);
+
+        ColorHandler cHandler = new ColorHandler(ImageHandler.getYoutubeThumbnail(videoId));
+        builder.setColor(cHandler.getDominantColor());
+
+        String templateYt = "https://i.ytimg.com/vi/%s/mqdefault.jpg";
+        builder.setImage(String.format(templateYt, videoId));
+
+        return builder;
+
     }
 
     public static EmbedBuilder getTrackLoadedEmbed(AudioTrack track) {

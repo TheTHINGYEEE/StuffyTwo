@@ -64,17 +64,24 @@ public class PlayerManager {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
 
-                AudioTrack firstTrack = playlist.getSelectedTrack();
-
+                // Signifies that it's a track from a search result specifically using ytsearch.
                 if(playlist.isSearchResult()) {
+                    AudioTrack firstTrack = playlist.getSelectedTrack();
                     if (firstTrack == null) {
                         firstTrack = playlist.getTracks().get(0);
+
+                        channel.sendMessageEmbeds(Embeds.getTrackLoadedEmbed(firstTrack).build()).queue();
+                        play(channel.getGuild(), musicManager, firstTrack, member);
                     }
+                    return;
                 }
 
-                channel.sendMessageEmbeds(Embeds.getTrackLoadedEmbed(firstTrack).build()).queue();
+                channel.sendMessageEmbeds(Embeds.getPlaylistLoadedEmbed(playlist).build()).queue();
 
-                play(channel.getGuild(), musicManager, firstTrack, member);
+                for(AudioTrack track : playlist.getTracks()) {
+                    play(channel.getGuild(), musicManager, track, member);
+                }
+
             }
 
             @Override

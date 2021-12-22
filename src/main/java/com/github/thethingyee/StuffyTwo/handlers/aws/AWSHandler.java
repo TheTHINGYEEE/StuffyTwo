@@ -8,26 +8,35 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
+import com.github.thethingyee.StuffyTwo.handlers.ConfigurationHandler;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/*
+    Huge thanks to Kody Simpson's video for this.
+    https://youtu.be/wRt2iKERUws
+ */
 public class AWSHandler {
 
     private final AmazonS3 bucket;
-    private final String bucketName = "cloudstoragecdn";
-    private final String prefix = "queues/";
+    private final String bucketName = ConfigurationHandler.getInstance().getProperty("aws.bucketName");
+    private final String prefix = ConfigurationHandler.getInstance().getProperty("aws.bucketPrefix") + "//";
 
     /**
      * Initialize the AWS bucket to get its info.
      */
     public AWSHandler() {
+        ConfigurationHandler shortConfigHandler = ConfigurationHandler.getInstance();
         AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(
-                new BasicAWSCredentials("accessKey", "secretKey")
+                new BasicAWSCredentials(shortConfigHandler.getProperty("aws.accessKey"), shortConfigHandler.
+                        getProperty("aws.secretKey"))
         );
 
         bucket = AmazonS3ClientBuilder
@@ -75,10 +84,12 @@ public class AWSHandler {
         });
         parent.put("songsInSort", urls);
 
-        File folder = new File(".//temp");
+        boolean useBackslash = ConfigurationHandler.getInstance().useBackslashes();
+
+        File folder = new File((useBackslash ? "temp" : "temp"));
         folder.mkdirs();
 
-        File f = new File(".//temp//" + generated + ".json");
+        File f = new File((useBackslash ? "temp\\" : "temp//") + generated + ".json");
         f.createNewFile();
 
         FileWriter fWriter = new FileWriter(f);
@@ -117,13 +128,18 @@ public class AWSHandler {
      * @param file File input and this must be a JSON file.
      * @param altURL An alternative URL which you can put if the method gets the URL of the resource.
      * @param useAltUrl A boolean if you really want to use an alternative URL.
-     * @return The URL for the uploaded resource.
+     * @return The URL for the uploaded resource and the json (string) contents of the file.
      */
-    public String uploadFile(File file, String altURL, boolean useAltUrl) {
+    public String[] uploadFile(File file) throws IOException {
 
-        if(altURL != null) {
-            useAltUrl = true;
-        }
+        String altURL = ConfigurationHandler.getInstance().getProperty("aws.embed.alternateURL");
+        boolean useAltURL = ConfigurationHandler.getInstance().useAlternateURL();
+
+        // array 0 for url of uploaded file
+        // array 1 for string contents of json file
+        String[] response = new String[2];
+
+        if(altURL != null) useAltURL = true;
 
         try {
             InputStream is = new FileInputStream(file);
@@ -137,10 +153,17 @@ public class AWSHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        response[1] = new String(Files.readAllBytes(Paths.get(file.toURI())));
+
         file.delete();
-        if(useAltUrl) {
-            return altURL + "/" + prefix + file.getName();
-        }
-        return bucket.getUrl(bucketName, prefix + file.getName()).toString();
+
+        response[0] = (useAltURL ? altURL + "/" + prefix + file.getName() :
+                bucket.getUrl(bucketName, prefix + file.getName()).toString());
+
+        return response;
+    }
+
+    public boolean bucketIsNull() {
+        return bucket == null;
     }
 }

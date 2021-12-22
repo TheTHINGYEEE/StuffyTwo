@@ -145,4 +145,12 @@ public class TrackScheduler extends AudioEventAdapter {
     public List<AudioTrack> getQueue() {
         return new ArrayList<>(queue);
     }
+
+    public List<AudioTrack> getQueueWithPlayingTrack() {
+        ArrayList<AudioTrack> queueList = new ArrayList<>(queue);
+        queueList.add(0, player.getPlayingTrack());
+
+
+        return queueList;
+    }
 }

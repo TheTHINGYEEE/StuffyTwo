@@ -1,5 +1,6 @@
 package com.github.thethingyee.StuffyTwo;
 
+import com.github.thethingyee.StuffyTwo.handlers.ConfigurationHandler;
 import com.github.thethingyee.StuffyTwo.handlers.aws.AWSHandler;
 import com.github.thethingyee.StuffyTwo.player.CommandManager;
 import com.github.thethingyee.StuffyTwo.player.commands.*;
@@ -20,12 +21,12 @@ public class StuffyTwo extends ListenerAdapter {
 
     public static void main(String[] args) throws Exception {
 
-        JDA jda = JDABuilder.createDefault("bot token")
+        JDA jda = JDABuilder.createDefault(ConfigurationHandler.getInstance().getProperty("bot.token"))
                 .addEventListeners(new CommandManager())
                 .build();
 
-        jda.getPresence().setPresence(Activity.streaming("on a garbage channel", "https://www.twitch.tv/thethingyeee"), false);
-
+//        jda.getPresence().setPresence(Activity.streaming("on a garbage channel", "https://www.twitch.tv/thethingyeee"), false);
+        jda.getPresence().setPresence(Activity.playing("while on maintenance."), false);
         new StuffyTwo().initialize();
 
     }
@@ -60,4 +61,10 @@ public class StuffyTwo extends ListenerAdapter {
     public static String getPrefix() {
         return prefix;
     }
+
 }
+
+/*
+    90% of the code was written by me. (ThingyTV)
+    You'll find the sources at the very top of a method/class if it is copied.
+ */
