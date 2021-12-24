@@ -25,4 +25,14 @@ public class SkipCommand extends Command {
     public void execute(GuildMessageReceivedEvent event, MainManager manager, String[] args) {
         manager.getPlayerManager().skipTrack(event.getChannel());
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

@@ -42,6 +42,16 @@ public class SaveQueueCommand extends Command {
         }
     }
 
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
+
     /**
      * Parses a JSON file to a readable object in Java.
      *

@@ -35,4 +35,14 @@ public class ClearQueueCommand extends Command {
         if(!queue.isEmpty()) manager.getPlayerManager().getGuildAudioPlayer(event.getGuild()).getScheduler().clearQueue(event.getGuild());
         event.getChannel().sendMessageEmbeds(b.build()).queue();
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

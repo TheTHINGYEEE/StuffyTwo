@@ -64,4 +64,14 @@ public class DisconnectCommand extends Command {
             event.getChannel().sendMessage("Disconnected from voice channel.").queue();
         }
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

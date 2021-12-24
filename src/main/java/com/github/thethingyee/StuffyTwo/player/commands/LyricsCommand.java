@@ -52,6 +52,16 @@ public class LyricsCommand extends Command {
 
     }
 
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
+
     private void sendLyrics(TextChannel channel, String query, Member member) {
         Lyrics lyrics = findLyrics(query);
         if(lyrics == null) {

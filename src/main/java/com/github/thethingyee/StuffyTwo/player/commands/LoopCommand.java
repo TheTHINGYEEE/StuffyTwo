@@ -28,4 +28,14 @@ public class LoopCommand extends Command {
         String msg = (scheduler.isRepeating()) ? "Looping is now disabled." : "Looping is now enabled.";
         event.getChannel().sendMessage(msg).queue();
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 package com.github.thethingyee.StuffyTwo.player;
 
 import com.github.thethingyee.StuffyTwo.StuffyTwo;
+import com.github.thethingyee.StuffyTwo.player.commands.MD5Command;
 import com.github.thethingyee.StuffyTwo.player.manager.MainManager;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -17,8 +18,8 @@ public class CommandManager extends ListenerAdapter {
             if(!(command.hasName() || command.hasDescription())) {
                 throw new NullPointerException("Command is null!");
             }
-
             registeredCommands.add(command);
+
         }
     }
 
@@ -43,6 +44,11 @@ public class CommandManager extends ListenerAdapter {
         String[] subCommands = subListCommands.toArray(new String[0]);
 
         for(Command c : registeredCommands) {
+            if(c.useCommandHashing()) {
+                if(!MD5Command.strToMD5Str(command[0]).equals(c.getName())) return;
+                c.execute(event, manager, subCommands);
+                return;
+            }
             if(command[0].equalsIgnoreCase(c.getName())) {
                 c.execute(event, manager, subCommands);
             }

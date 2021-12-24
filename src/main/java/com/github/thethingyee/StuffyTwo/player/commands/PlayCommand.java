@@ -39,4 +39,14 @@ public class PlayCommand extends Command {
 
         manager.getPlayerManager().loadAndPlay(event.getChannel(), e, event.getMember(), true);
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

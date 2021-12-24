@@ -60,4 +60,14 @@ public class TestCommand extends Command {
             event.getChannel().sendMessage("Executed test!").queue();
         }
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

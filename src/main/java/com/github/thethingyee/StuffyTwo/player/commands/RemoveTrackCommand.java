@@ -37,4 +37,14 @@ public class RemoveTrackCommand extends Command {
             manager.getPlayerManager().getGuildAudioPlayer(event.getGuild()).getScheduler().removeTrack(num, event.getChannel());
         }
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

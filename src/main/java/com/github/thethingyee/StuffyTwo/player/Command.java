@@ -9,6 +9,8 @@ public abstract class Command {
     public abstract String getDescription();
     public abstract String getArguments();
     public abstract void execute(GuildMessageReceivedEvent event, MainManager manager, String[] args);
+    public abstract boolean isVisible();
+    public abstract boolean useCommandHashing();
 
     public boolean hasName() {
         return getName() != null;

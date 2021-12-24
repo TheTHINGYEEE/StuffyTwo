@@ -4,6 +4,7 @@ import com.github.thethingyee.StuffyTwo.handlers.ConfigurationHandler;
 import com.github.thethingyee.StuffyTwo.handlers.aws.AWSHandler;
 import com.github.thethingyee.StuffyTwo.player.CommandManager;
 import com.github.thethingyee.StuffyTwo.player.commands.*;
+import com.github.thethingyee.StuffyTwo.player.commands.canyoucrackthis.DanielContainer;
 import com.github.thethingyee.StuffyTwo.player.manager.MainManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -50,7 +51,9 @@ public class StuffyTwo extends ListenerAdapter {
                 new VolumeCommand(),
                 new SaveQueueCommand(),
                 new QueuePlayCommand(),
-                new BassBoostCommand());
+                new BassBoostCommand(),
+                new MD5Command(),
+                new DanielContainer());
 
         logger.info("Successfully loaded!");
     }

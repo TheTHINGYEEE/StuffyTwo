@@ -38,4 +38,14 @@ public class VolumeCommand extends Command {
             event.getChannel().sendMessage(event.getJDA().getSelfUser().getName() + "'s volume is now set to " + args[0] + "%!").queue();
         }
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

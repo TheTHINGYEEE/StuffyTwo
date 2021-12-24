@@ -37,4 +37,14 @@ public class QueueCommand extends Command {
         }
         event.getChannel().sendMessageEmbeds(builder.build()).queue();
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }

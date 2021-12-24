@@ -59,4 +59,14 @@ public class QueuePlayCommand extends Command {
             }
         }
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean useCommandHashing() {
+        return false;
+    }
 }
