@@ -70,4 +70,9 @@ public class TestCommand extends Command {
     public boolean useCommandHashing() {
         return false;
     }
+
+    @Override
+    public boolean isDisabled() {
+        return true;
+    }
 }

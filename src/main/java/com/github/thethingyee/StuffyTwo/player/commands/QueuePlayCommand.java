@@ -69,4 +69,9 @@ public class QueuePlayCommand extends Command {
     public boolean useCommandHashing() {
         return false;
     }
+
+    @Override
+    public boolean isDisabled() {
+        return false;
+    }
 }

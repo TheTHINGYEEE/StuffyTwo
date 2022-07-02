@@ -19,7 +19,7 @@ public class MD5Command extends Command {
 
     @Override
     public String getDescription() {
-        return "Development purposes - Hashes a string to md5.";
+        return "**(Development purposes)** Hashes a string to md5.";
     }
 
     @Override
@@ -60,6 +60,11 @@ public class MD5Command extends Command {
 
     @Override
     public boolean useCommandHashing() {
+        return false;
+    }
+
+    @Override
+    public boolean isDisabled() {
         return false;
     }
 }

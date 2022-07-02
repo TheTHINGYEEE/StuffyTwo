@@ -52,6 +52,11 @@ public class SaveQueueCommand extends Command {
         return false;
     }
 
+    @Override
+    public boolean isDisabled() {
+        return false;
+    }
+
     /**
      * Parses a JSON file to a readable object in Java.
      *

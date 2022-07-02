@@ -26,8 +26,9 @@ public class StuffyTwo extends ListenerAdapter {
                 .addEventListeners(new CommandManager())
                 .build();
 
-        jda.getPresence().setPresence(Activity.streaming("on a garbage channel", "https://www.twitch.tv/thethingyeee"), false);
+//        jda.getPresence().setPresence(Activity.streaming("on a garbage channel", "https://www.twitch.tv/thethingyeee"), false);
 //        jda.getPresence().setPresence(Activity.playing("while on maintenance."), false);
+        jda.getPresence().setPresence(Activity.listening("music while I'm being revamped."), true);
         new StuffyTwo().initialize();
 
     }

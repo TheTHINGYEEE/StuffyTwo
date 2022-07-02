@@ -62,6 +62,11 @@ public class LyricsCommand extends Command {
         return false;
     }
 
+    @Override
+    public boolean isDisabled() {
+        return false;
+    }
+
     private void sendLyrics(TextChannel channel, String query, Member member) {
         Lyrics lyrics = findLyrics(query);
         if(lyrics == null) {

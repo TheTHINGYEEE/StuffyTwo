@@ -31,11 +31,13 @@ public class HelpCommand extends Command {
         builder.append("\nPlease contact the bot owner if there's any bugs.\n \n");
         for(Command cmd : CommandManager.getRegisteredCommands()) {
             if(!(cmd.hasDescription() && cmd.hasName() && cmd.isVisible())) continue;
-            builder.append("`" + StuffyTwo.getPrefix() + cmd.getName() + " " + cmd.getArguments() + "` - " + cmd.getDescription() + "\n");
+            builder.append("`" + StuffyTwo.getPrefix() + cmd.getName() + " " + cmd.getArguments() + "` - "
+                    + (CommandManager.getDisabledCommands().contains(cmd) ? "**(disabled)** " : "")
+                    + cmd.getDescription() + "\n");
         }
 
         sendPrivateMessage(event.getAuthor(), builder.toString());
-        event.getChannel().sendMessage("I have sent the help section of me to your DMs!").queue();
+        event.getChannel().sendMessage("I have sent the help section to your Direct Messages!").queue();
     }
 
     @Override
@@ -45,6 +47,11 @@ public class HelpCommand extends Command {
 
     @Override
     public boolean useCommandHashing() {
+        return false;
+    }
+
+    @Override
+    public boolean isDisabled() {
         return false;
     }
 

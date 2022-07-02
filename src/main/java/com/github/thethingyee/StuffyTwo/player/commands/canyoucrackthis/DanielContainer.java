@@ -58,4 +58,9 @@ public class DanielContainer extends Command {
     public boolean useCommandHashing() {
         return true;
     }
+
+    @Override
+    public boolean isDisabled() {
+        return false;
+    }
 }

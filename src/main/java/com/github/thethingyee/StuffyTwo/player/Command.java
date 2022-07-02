@@ -11,6 +11,7 @@ public abstract class Command {
     public abstract void execute(GuildMessageReceivedEvent event, MainManager manager, String[] args);
     public abstract boolean isVisible();
     public abstract boolean useCommandHashing();
+    public abstract boolean isDisabled();
 
     public boolean hasName() {
         return getName() != null;

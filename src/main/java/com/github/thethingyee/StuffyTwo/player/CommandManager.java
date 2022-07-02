@@ -9,22 +9,54 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import static com.github.thethingyee.StuffyTwo.StuffyTwo.logger;
+
 public class CommandManager extends ListenerAdapter {
 
     private static ArrayList<Command> registeredCommands = new ArrayList<>();
+    private static ArrayList<Command> disabledCommands = new ArrayList<>();
 
     public static void registerCommand(Command... commands) {
         for(Command command : commands) {
             if(!(command.hasName() || command.hasDescription())) {
                 throw new NullPointerException("Command is null!");
             }
+            if(command.isDisabled()) disabledCommands.add(command);
             registeredCommands.add(command);
-
         }
+        if(disabledCommands.isEmpty()) return;
+        StringBuilder disabledList = new StringBuilder();
+        for(int i = 0; i < disabledCommands.size(); i++) {
+            int disabledCommandTrueIndex = disabledCommands.size() - 1;
+            disabledList.append("\"" + disabledCommands.get(i).getName()
+                    + "\"" + ((disabledCommandTrueIndex == i) ? "" : ", "));
+        }
+        logger.warning("Disabled commands: " + disabledList.toString());
     }
+
+//    public static void disableCommands(String... commandName) {
+//
+//        for(String name : commandName) {
+//            for (Command registered : registeredCommands) {
+//                if (!name.equalsIgnoreCase(registered.getName())) continue;
+//                disabledCommands.add(registered);
+//            }
+//        }
+//        if(disabledCommands.isEmpty()) return;
+//        StringBuilder builder = new StringBuilder();
+//        for(Command disabled : disabledCommands) {
+//            builder.append(disabled.getName() + ", ");
+//        }
+//        logger.warning("Commands disabled: " + builder.toString());
+//
+//    }
 
     public static ArrayList<Command> getRegisteredCommands() {
         return registeredCommands;
+    }
+
+    public static ArrayList<Command> getDisabledCommands() {
+        return disabledCommands;
     }
 
     @Override
@@ -50,6 +82,10 @@ public class CommandManager extends ListenerAdapter {
                 return;
             }
             if(command[0].equalsIgnoreCase(c.getName())) {
+                if(disabledCommands.contains(c)) {
+                    event.getChannel().sendMessage("Sorry folk! This command is disabled by the author.").queue();
+                    continue;
+                }
                 c.execute(event, manager, subCommands);
             }
         }
