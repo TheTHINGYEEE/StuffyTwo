@@ -2,8 +2,7 @@ package com.github.thethingyee.StuffyTwo.handlers;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * ColorHandler is meant specifically for getting dominant colors.
@@ -14,7 +13,9 @@ public class ColorHandler {
      * Color is for the RGB values and Integer is for the votes.
      */
     private final HashMap<Color, Integer> votes = new HashMap<>();
-    private final HashMap<int[], Integer> votes2 = new HashMap<>();
+
+    // Source: https://stackoverflow.com/a/63350967
+    private final TreeMap<int[], Integer> votes2 = new TreeMap<>(Arrays::compare);
     private final BufferedImage img;
 
     /**
@@ -33,11 +34,11 @@ public class ColorHandler {
      * @return Returns the most dominant color of the cached image.
      */
     public Color getDominantColor() {
-        int blackLevel = 15;
-        for(int x = 0; x < img.getWidth(); x++) {
-            for(int y = 0; y < img.getHeight(); y++) {
+        int ignoreBlackLevel = 15;
+        for(int y = 0; y < img.getHeight(); y++) {
+            for(int x = 0; x < img.getWidth(); x++) {
                 Color c = new Color(img.getRGB(x, y));
-                if(c.getRed() < blackLevel && c.getGreen() < blackLevel && c.getBlue() < blackLevel) continue;
+                if(c.getRed() < ignoreBlackLevel && c.getGreen() < ignoreBlackLevel && c.getBlue() < ignoreBlackLevel) continue;
                 int cVote = votes.containsKey(c) ? votes.get(c) + 1 : 1;
                 votes.put(c, cVote);
             }
@@ -60,11 +61,12 @@ public class ColorHandler {
      * @return Returns the most dominant color of the cached image.
      */
     public int[] getDominantColorByRaster() {
+        int ignoreBlackLevel = 15;
         int[] pixel;
-        for(int x = 0; x < img.getWidth(); x++) {
-            for(int y = 0; y < img.getHeight(); y++) {
+        for(int y = 0; y < img.getHeight(); y++) {
+            for(int x = 0; x < img.getWidth(); x++) {
                 pixel = img.getRaster().getPixel(x, y, new int[3]);
-                if(pixel[0] < 15 && pixel[1] < 15 && pixel[2] < 15) continue;
+                if(pixel[0] < ignoreBlackLevel && pixel[1] < ignoreBlackLevel && pixel[2] < ignoreBlackLevel) continue;
                 int cVote = votes2.containsKey(pixel) ? votes2.get(pixel) + 1 : 1;
                 votes2.put(pixel, cVote);
             }

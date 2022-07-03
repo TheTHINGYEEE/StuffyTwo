@@ -9,11 +9,15 @@ public class ImageHandler {
 
     public static BufferedImage getYoutubeThumbnail(String vidId) {
         try {
-            URL thumbnailURL = new URL(String.format(String.format("https://i.ytimg.com/vi/%s/mqdefault.jpg", vidId)));
+            URL thumbnailURL = new URL(getYouTubeThumbnailURL(vidId));
             return ImageIO.read(thumbnailURL);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getYouTubeThumbnailURL(String vidId) {
+        return String.format("https://i.ytimg.com/vi/%s/mqdefault.jpg", vidId);
     }
 }

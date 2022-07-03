@@ -4,8 +4,10 @@ import com.github.thethingyee.StuffyTwo.handlers.ColorHandler;
 import com.github.thethingyee.StuffyTwo.handlers.ImageHandler;
 import com.github.thethingyee.StuffyTwo.player.Command;
 import com.github.thethingyee.StuffyTwo.player.manager.MainManager;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class TestCommand extends Command {
@@ -35,22 +37,33 @@ public class TestCommand extends Command {
             return;
         }
 
+        BufferedImage img = ImageHandler.getYoutubeThumbnail(id);
+        String thumbnailUrl = ImageHandler.getYouTubeThumbnailURL(id);
+
         if(args[0].equalsIgnoreCase("dominantcolor")) {
             event.getChannel().sendMessage("Getting dominant color of " + id + " using Color object.").queue();
-            BufferedImage img = ImageHandler.getYoutubeThumbnail(id);
-
             long startTime = System.nanoTime();
-            new ColorHandler(img).getDominantColor();
+            Color dominantColor = new ColorHandler(img).getDominantColor();
             long endTime = System.nanoTime();
             long timeElapsed = (endTime - startTime) / 1000000;
-            event.getChannel().sendMessage("Took approximately " + timeElapsed + "ms").queue();
+
+            EmbedBuilder colorBuilder = new EmbedBuilder();
+            colorBuilder.setColor(dominantColor);
+            colorBuilder.setImage(thumbnailUrl);
+            colorBuilder.setDescription("Color object: Took approximately " + timeElapsed + "ms");
 
             event.getChannel().sendMessage("Getting dominant color of " + id + " using raster.").queue();
             long startTime2 = System.nanoTime();
-            new ColorHandler(img).getDominantColorByRaster();
+            int[] rasterDom = new ColorHandler(img).getDominantColorByRaster();
             long endTime2 = System.nanoTime();
             long timeElapsed2 = (endTime2 - startTime2) / 1000000;
-            event.getChannel().sendMessage("Took approximately " + timeElapsed2 + "ms").queue();
+
+            EmbedBuilder rasterBuilder = new EmbedBuilder();
+            rasterBuilder.setColor(new Color(rasterDom[0], rasterDom[1], rasterDom[2]));
+            rasterBuilder.setImage(thumbnailUrl);
+            rasterBuilder.setDescription("Raster: Took approximately " + timeElapsed2 + "ms");
+
+            event.getChannel().sendMessageEmbeds(colorBuilder.build(), rasterBuilder.build()).queue();
 
             return;
         }
@@ -73,6 +86,6 @@ public class TestCommand extends Command {
 
     @Override
     public boolean isDisabled() {
-        return true;
+        return false;
     }
 }

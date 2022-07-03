@@ -93,6 +93,7 @@ public class TrackScheduler extends AudioEventAdapter {
             }
             if(queue.isEmpty()) {
                 guild.getAudioManager().closeAudioConnection();
+                return;
             }
             nextTrack();
         }

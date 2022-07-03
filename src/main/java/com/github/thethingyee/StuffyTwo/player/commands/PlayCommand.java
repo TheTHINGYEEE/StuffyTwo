@@ -25,6 +25,7 @@ public class PlayCommand extends Command {
     @Override
     public void execute(GuildMessageReceivedEvent event, MainManager manager, String[] args) {
 
+
         if(args.length == 0) {
             event.getChannel().sendMessage("Please specify a link or a song name!").queue();
             return;

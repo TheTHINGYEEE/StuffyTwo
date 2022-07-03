@@ -35,7 +35,7 @@ public class StuffyTwo extends ListenerAdapter {
 
     private void initialize() {
         mainManager = new MainManager();
-        prefix = ",";
+        prefix = ".";
 
         CommandManager.registerCommand(
                 new ClearQueueCommand(),

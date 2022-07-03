@@ -9,11 +9,13 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Embeds {
 
@@ -57,8 +59,22 @@ public class Embeds {
         String videoId = track.getInfo().uri.replace("https://www.youtube.com/watch?v=", "");
 
         builder.setTitle("Track added.", track.getInfo().uri);
-        builder.addField("Track name:", track.getInfo().title, false);
+        builder.addField("Track name:", track.getInfo().title, true);
+        builder.addBlankField(true);
+        builder.addField("Track author:", track.getInfo().author, true);
+
+
+        // Source: https://www.baeldung.com/java-ms-to-hhmmss
+        long HH = TimeUnit.MILLISECONDS.toHours(track.getInfo().length);
+        long MM = TimeUnit.MILLISECONDS.toMinutes(track.getInfo().length) % 60;
+        long SS = TimeUnit.MILLISECONDS.toSeconds(track.getInfo().length) % 60;
+
+        String timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
+
+        builder.addField("Track length:", timeInHHMMSS, true);
+        builder.addBlankField(true);
         builder.addField("Video ID:", videoId, true);
+        builder.setFooter("© 2022 ThingyTV | Licensed under GPL-3.0");
 
         ColorHandler cHandler = new ColorHandler(ImageHandler.getYoutubeThumbnail(videoId));
         builder.setColor(cHandler.getDominantColor());
